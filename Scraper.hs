@@ -33,7 +33,7 @@ import Network.HTTP.Client.Internal (setUri)
 import Network.HTTP.Conduit
 import Network.HTTP.Types.Header
 import Network.URI
-import System.Log.FastLogger (toLogStr)
+import System.Log.FastLogger (LogStr, toLogStr)
 import qualified Text.HTML.DOM
 import Text.Regex.PCRE
 import Text.XML
@@ -81,18 +81,24 @@ instance MonadLogger (ScraperA pc) where
                          (if null src then "" else "#" ++ toLogStr src) ++
                      "] " ++
                      toLogStr msg ++
-                     " @(" ++ toLogStr (showFileLocation loc) ++ ")\n"
+                     " @(" ++ showFileLocation loc ++ ")\n"
         liftIO $ loggerPutStr logger logStr
 
 showLevel :: LogLevel -> String
 showLevel (LevelOther t) = unpack t
 showLevel level = drop 5 $ show level
 
-showFileLocation :: Loc -> String
-showFileLocation loc = (loc_package loc) ++ ':' : (loc_filename loc) ++
-  ':' : (show line) ++ ':' : (show char)
+showFileLocation :: Loc -> LogStr
+showFileLocation loc =
+  (toLogStr $ loc_package loc) ++ ":" ++
+  (toLogStr $ stripPrefix' "./" $ loc_filename loc) ++ ":" ++
+  (toLogStr $ show line) ++ ":" ++
+  (toLogStr $ show char)
   where
     (line, char) = loc_start loc
+
+stripPrefix' :: Eq a => [a] -> [a] -> [a]
+stripPrefix' prefix a = maybe a id $ stripPrefix prefix a
 
 
 runScraper :: CookieJar -> ScraperEnv pc -> ScraperA pc a -> IO a
