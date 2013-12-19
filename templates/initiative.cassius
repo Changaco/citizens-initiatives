@@ -1,0 +1,28 @@
+
+.objectives
+    white-space: pre-line
+
+.documents > a
+    margin-left: 10px
+
+table
+    font-family: Arial
+    border-collapse: collapse
+    margin-bottom: 1em
+td, th
+    border: 1px solid #000
+    padding: 2px 3px
+th
+    text-align: center
+    padding: 6px
+td
+    font-size: 13px
+    &.number
+        text-align: right
+thead > tr
+    background-color: #f0f0f0
+tbody > tr
+    &:nth-child(2n)
+        background-color: #fafafa
+    &:hover
+        background-color: #f5f5f5

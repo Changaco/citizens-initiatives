@@ -1,0 +1,127 @@
+name:              citizens-initiatives
+version:           0.0.0
+cabal-version:     >= 1.8
+build-type:        Simple
+
+Flag dev
+    Description:   Turn on development settings, like auto-reload templates.
+    Default:       False
+
+Flag library-only
+    Description:   Build for use with "yesod devel"
+    Default:       False
+
+library
+    exposed-modules: Application
+                     Foundation
+                     Handlers
+                     Import
+                     Model
+                     Scraper
+                     Scrapers
+                     Settings
+                     Settings.StaticFiles
+                     Settings.Development
+                     Utils
+                     Widgets
+
+    if flag(dev) || flag(library-only)
+        cpp-options:   -DDEVELOPMENT
+        ghc-options:   -Wall -threaded -O0
+    else
+        ghc-options:   -Wall -threaded -O2
+
+    extensions: CPP
+                DeriveDataTypeable
+                EmptyDataDecls
+                FlexibleContexts
+                FlexibleInstances
+                GADTs
+                GeneralizedNewtypeDeriving
+                MultiParamTypeClasses
+                NoImplicitPrelude
+                NoMonomorphismRestriction
+                OverloadedStrings
+                QuasiQuotes
+                RecordWildCards
+                TemplateHaskell
+                TypeFamilies
+
+    build-depends: base
+                 , classy-prelude
+                 , aeson
+                 , attoparsec-conduit
+                 , bytestring
+                 , conduit
+                 , containers
+                 , data-default
+                 , directory
+                 , dom-selector
+                 , failure
+                 , fast-logger
+                 , hamlet
+                 , HandsomeSoup
+                 , hjsmin
+                 , html-conduit
+                 , http-client
+                 , http-conduit
+                 , http-types
+                 , hxt
+                 , monad-control
+                 , monad-logger
+                 , monads-tf
+                 , network
+                 , old-locale
+                 , persistent
+                 , persistent-postgresql
+                 , persistent-template
+                 , regex-pcre
+                 , resourcet
+                 , shakespeare-css
+                 , shakespeare-js
+                 , shakespeare-text
+                 , template-haskell
+                 , text
+                 , time
+                 , transformers
+                 , transformers-base
+                 , wai-extra
+                 , wai-logger
+                 , warp
+                 , xml-conduit
+                 , yaml
+                 , yesod
+                 , yesod-auth
+                 , yesod-core
+                 , yesod-form
+                 , yesod-static
+
+executable         citizens-initiatives
+    if flag(library-only)
+        Buildable: False
+
+    main-is:           main.hs
+    hs-source-dirs:    app
+    build-depends:     base
+                     , citizens-initiatives
+                     , yesod
+
+    ghc-options:       -Wall -threaded -O2
+
+test-suite test
+    type:              exitcode-stdio-1.0
+    main-is:           main.hs
+    hs-source-dirs:    tests
+    ghc-options:       -Wall -threaded
+
+    build-depends: base
+                 , citizens-initiatives
+                 , hspec
+                 , monad-logger
+                 , persistent
+                 , persistent-postgresql
+                 , resourcet
+                 , transformers
+                 , yesod
+                 , yesod-core
+                 , yesod-test

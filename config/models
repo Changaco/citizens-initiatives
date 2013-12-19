@@ -1,0 +1,65 @@
+User
+    ident Text
+    password Text Maybe
+    UniqueUser ident
+    deriving Typeable
+
+Email
+    email Text
+    user UserId Maybe
+    verkey Text Maybe
+    UniqueEmail email
+
+Initiative
+    start Day
+    deadline Day
+    representative Text
+    substitute Text
+    otherMembers Text
+    registrationLanguage Text
+    ocsUrl Text
+    deriving Eq
+
+ITranslation
+    initiativeId InitiativeId
+    lang Text
+    title Text
+    subtitle Text default=''
+    subject Text
+    objectives Text
+    website Text
+    annex Text
+    draftLegalAct Text
+    UniqueTranslation initiativeId lang
+    deriving Eq
+
+ICounter
+    initiativeId InitiativeId
+    countryCode Text
+    timestamp UTCTime
+    today Int Maybe
+    web Int
+    paper Int Maybe
+    total Int
+    quota Int
+    target Int
+    targetPercentage Double
+    UniqueCounter initiativeId countryCode
+    deriving Eq
+
+IWebCounter
+    initiativeId InitiativeId
+    countryCode Text
+    day Day
+    time Int
+    count Int
+    UniqueWebCounter initiativeId countryCode day
+    deriving Eq
+
+IPaperCounter
+    initiativeId InitiativeId
+    countryCode Text
+    day Day
+    count Int
+    UniquePaperCounter initiativeId countryCode count
+    deriving Eq

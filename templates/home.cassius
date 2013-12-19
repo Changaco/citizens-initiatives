@@ -1,0 +1,5 @@
+
+.initiative
+    margin-top: 1em
+    & > .col-md-9
+        margin-bottom: 15px

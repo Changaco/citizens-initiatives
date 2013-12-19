@@ -1,0 +1,14 @@
+
+p
+    text-align: justify
+
+.signatures-widget
+    margin: 0 0 8px
+    & > *
+        display: inline-block
+        margin: 0
+        vertical-align: middle
+    & > :first-child
+        margin-right: 5px
+    & > .progress
+        width: 260px

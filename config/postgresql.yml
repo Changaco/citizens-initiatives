@@ -1,0 +1,20 @@
+Default: &defaults
+  user: ""
+  password: ""
+  host: ""
+  database: citizens-initiatives
+  poolsize: 10
+
+Development:
+  <<: *defaults
+
+Testing:
+  <<: *defaults
+
+Staging:
+  poolsize: 100
+  <<: *defaults
+
+Production:
+  poolsize: 100
+  <<: *defaults

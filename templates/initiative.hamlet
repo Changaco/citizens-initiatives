@@ -1,0 +1,71 @@
+<h2>#{iTranslationTitle} #
+    <small>#{iTranslationSubtitle}
+
+<div class="row">
+    <div class="col-md-9">
+        <h4>_{MsgSubject}
+        <p class="subject">#{iTranslationSubject}
+
+        <h4>_{MsgObjectives}
+        <p class="objectives">#{iTranslationObjectives}
+
+        <h4>_{MsgLinks}
+        <p>
+            <strong>_{MsgWebsite}:
+            $with website <- iTranslationWebsite
+                <a class="website" href="#{website}">#{website}
+        $if (not $ null iTranslationAnnex) || (not $ null iTranslationDraftLegalAct)
+            <p class="documents">
+                <strong>_{MsgDocuments}:
+                $if not $ null iTranslationAnnex
+                    <a class="annex" href="#{iTranslationAnnex}">_{MsgAnnex}
+                $if not $ null iTranslationDraftLegalAct
+                    <a class="draftLegalAct" href="#{iTranslationDraftLegalAct}">
+                        _{MsgDraftLegalAct}
+        $if not $ null otherTranslations
+            <p class="otherTranslations">
+                <strong>_{MsgOtherLanguages}:
+                $forall lang <- otherTranslations
+                    \&#0032;&#0032;<a href="?_LANG=#{lang}">#{toUpper lang}</a>
+    <div class="col-md-3">
+        <h4>_{MsgSignatures}
+        ^{signaturesWidget signatures target}
+        <p class="days-left">_{MsgDaysLeft daysLeft}
+        ^{signButton initiativeOcsUrl}
+
+$if not $ null counters
+    <h4>_{MsgSignaturesTable}
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">_{MsgCountryCode}
+                    <th scope="col">_{MsgCountryName}
+                    <th scope="col">_{MsgToday}
+                    <th scope="col">_{MsgTotal}
+                    <th scope="col">_{MsgTarget}
+                    <th scope="col">_{MsgTargetPercentage}
+                    <th scope="col">_{MsgWeb}
+                    <th scope="col">_{MsgPaper}
+                    <th scope="col">_{MsgQuota}
+            <tbody>
+                $forall counter <- counters
+                    <tr>
+                        <td>#{toUpper $ iCounterCountryCode counter}
+                        <td>_{countryNameMsg $ iCounterCountryCode counter}
+                        <td class="number">
+                            $maybe today <- iCounterToday counter
+                                +#{show today}
+                        <td class="number">
+                            #{show $ iCounterTotal counter}
+                        <td class="number">
+                            #{show $ iCounterTarget counter}
+                        <td class="number">
+                            #{showPercent $ iCounterTargetPercentage counter}
+                        <td class="number">
+                            #{show $ iCounterWeb counter}
+                        <td class="number">
+                            $maybe paper <- iCounterPaper counter
+                                #{show paper}
+                        <td class="number">
+                            #{show $ iCounterQuota counter}

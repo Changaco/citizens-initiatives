@@ -1,0 +1,25 @@
+<p>_{MsgHomeIntro}
+
+<p>_{MsgOngoingInitiatives $ length initiatives}
+
+$forall (Entity iid i, signatures, target, translation, daysLeft) <- initiatives
+    <div class="row initiative">
+        <h3 class="col-md-12">#{iTranslationTitle translation} #
+            <small>#{iTranslationSubtitle translation}
+        <div class="col-md-9">
+            $with website <- iTranslationWebsite translation
+                <p>
+                    <strong>_{MsgWebsite}:
+                    <a class="website" href="#{website}">#{website}
+
+            <p class="subject">
+                <strong>_{MsgSubject}:
+                #{iTranslationSubject translation}
+
+            <a class="btn btn-primary" href="@{InitiativeR iid}">
+                _{MsgReadMore}
+
+        <div class="col-md-3">
+            ^{signaturesWidget signatures target}
+            <p class="days-left">_{MsgDaysLeft daysLeft}
+            ^{signButton $ initiativeOcsUrl i}
