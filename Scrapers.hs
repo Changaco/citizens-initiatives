@@ -1,7 +1,7 @@
 module Scrapers where
 
 import ClassyPrelude hiding (IOData(..))
-import Prelude (read, (!!))
+import Prelude (head, read, tail, (!!))
 
 import Control.Concurrent (forkIO, threadDelay)
 import Control.Monad.Logger
@@ -67,8 +67,8 @@ splitTitle title =
     mr = match regex $ encodeUtf8 title
 
 
-scrapeITranslation :: URI -> InitiativeId -> Text -> Scraper ()
-scrapeITranslation uri iid lang = do
+scrapeITranslation :: URI -> InitiativeId -> Text -> Text -> Scraper Text
+scrapeITranslation uri iid lang refWebsite = do
     maybeInitiative <- runDB $ get iid
     baseReq <- asks scraperBaseReq
     (_, docCursor) <- scrapeHtml baseReq uri
@@ -102,7 +102,7 @@ scrapeITranslation uri iid lang = do
             subtitle
             (strip $ getText $ contentBoxes!!1 $/ byClass "subcontentText")
             (strip $ getText $ contentBoxes!!2 $/ byClass "subcontentText")
-            (zeroOrOne "" $ concat $ contentBoxes!!5 $/
+            (zeroOrOne refWebsite $ concat $ contentBoxes!!5 $/
                 byClass "subcontentText" &/ element "a" &| attribute "href")
             (zeroOrOne "" $ contentBoxes!!6 $// docLinks)
             (zeroOrOne "" $ contentBoxes!!7 $// docLinks)
@@ -111,7 +111,9 @@ scrapeITranslation uri iid lang = do
         when (maybeInitiative /= Just initiative) $ repsert iid initiative
         repsertUnique (UniqueTranslation iid lang) itranslation
 
-    return ()
+    if initiativeRegistrationLanguage initiative == lang
+        then return $ iTranslationWebsite itranslation
+        else return ""
 
 
 scrapeInitiatives :: Scraper ()
@@ -120,17 +122,30 @@ scrapeInitiatives = do
         urlsWeWant = "^"++show rootUri++"/details/(\\d{4})/(\\d{6})/([a-z]+)$"
     baseReq <- asks scraperBaseReq
     (_, cursor) <- scrapeHtml baseReq rootUri
-    let matches = matchLinks rootUri cursor urlsWeWant
-    when (null matches) $
+    let rows = cursor $// byClass "eci-table" &// element "tr"
+    let lists = filter (not . null) $
+                map (\row -> matchLinks rootUri row urlsWeWant) rows
+    when (null lists) $
         $(logError) ("failed to extract URLs to scrape from "++tshow rootUri)
-    forM_ matches $ \MR{ mrMatch = url, mrSubList = urlParts } -> do
-        let uri = parseURIReference' url
+    forM_ lists $ \matches -> do
+        -- ↓ this assumes that the registration language is first in the list
+        let mr0 = head matches
+            urlParts = mrSubList mr0
             i = pack (urlParts!!0 ++ urlParts!!1)
         case fromPathPiece i of
             Nothing -> $(logError) ("failed to read InitiativeId: "++i)
-            Just iid -> do
-                scrapeITranslation uri iid (pack $ urlParts!!2)
-                liftIO $ threadDelay 15000000
+            Just iid -> scrapeInitiative iid mr0 (tail matches)
+  where
+    scrapeInitiative iid firstMR rest = do
+        let uri = getURI firstMR
+        refWebsite <- scrapeITranslation uri iid (getLang firstMR) ""
+        when (null refWebsite) $ do
+            $(logError) ("website URL not found in "++tshow uri)
+        forM_ rest $ \mr -> do
+            _ <- scrapeITranslation (getURI mr) iid (getLang mr) refWebsite
+            liftIO $ threadDelay 15000000
+    getURI = parseURIReference' . mrMatch
+    getLang mr = pack $ (mrSubList mr)!!2
 
 
 data MapData = MapData
