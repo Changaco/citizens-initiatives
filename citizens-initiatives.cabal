@@ -1,5 +1,6 @@
 name:              citizens-initiatives
 version:           0.0.0
+license:           GPL-3
 cabal-version:     >= 1.8
 build-type:        Simple
 
