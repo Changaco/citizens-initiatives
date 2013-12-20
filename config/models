@@ -55,11 +55,3 @@ IWebCounter
     count Int
     UniqueWebCounter initiativeId countryCode day
     deriving Eq
-
-IPaperCounter
-    initiativeId InitiativeId
-    countryCode Text
-    day Day
-    count Int
-    UniquePaperCounter initiativeId countryCode count
-    deriving Eq
