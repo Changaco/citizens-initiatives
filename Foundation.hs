@@ -86,6 +86,13 @@ mkYesodData "App" $(parseRoutesFile "config/routes")
 
 type Form x = Html -> MForm (HandlerT App IO) (FormResult x, Widget)
 
+
+twitterAccount :: Text
+twitterAccount = "https://twitter.com/CitInitiatives"
+githubRepo :: Text
+githubRepo = "https://github.com/Changaco/citizens-initiatives"
+
+
 -- Please see the documentation for the Yesod typeclass. There are a number
 -- of settings which can be configured by overriding methods here.
 instance Yesod App where

@@ -1,3 +1,5 @@
 <h2>_{MsgAbout}
 
+<p>This site was created by <a href="https://twitter.com/Changaco">Changaco</a>.
 
+<p>If you want to request a new feature or report a bug, you can do so <a href="#{githubRepo}/issues">on GitHub</a>.
