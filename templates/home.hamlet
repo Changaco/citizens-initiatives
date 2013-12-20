@@ -1,7 +1,5 @@
 <p>_{MsgHomeIntro}
 
-<p>_{MsgOngoingInitiatives $ length initiatives}
-
 $forall (Entity iid i, signatures, target, translation, daysLeft) <- initiatives
     <div class="row initiative">
         <h3 class="col-md-12">#{iTranslationTitle translation} #

@@ -4,16 +4,14 @@ SiteTitle: Citizens' Initiatives
 
 About: About
 
+HomeIntro: A citizens' initiative is an officially recognized petition for citizens to demand the attention of their representatives on a specific problem. Below is the list of the ongoing European Citizens' Initiatives (ECI). Each one that collects over one million signatures in the allotted time will be examined by the European Commission.
+
 Annex: Annex
 DaysLeft i@Int: #{show i} days left
-# DaysLeftTooltip: An initiative lasts 1 year
-Deadline: Deadline
 Documents: Documents
 DraftLegalAct: Draft legal act
-HomeIntro: 
 Links: Links
 Objectives: Objectives
-OngoingInitiatives i@Int: There #{plural i "is" "are"} #{show i} ongoing initiative#{plural i "" "s"}.
 OtherLanguages: Other languages
 ReadMore: Read more
 Signatures: Signatures
