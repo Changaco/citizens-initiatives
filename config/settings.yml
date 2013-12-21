@@ -13,6 +13,5 @@ Staging:
   <<: *defaults
 
 Production:
-  host: "*"
   approot: "//citizens-initiatives.changaco.net"
   <<: *defaults
