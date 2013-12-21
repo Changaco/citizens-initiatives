@@ -1,0 +1,6 @@
+$(function () {
+    var now = new Date();
+    $('[data-toggle="now"]').text(
+        now.toLocaleDateString()+' '+now.toLocaleTimeString()
+    );
+})
