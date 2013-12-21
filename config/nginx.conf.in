@@ -1,0 +1,18 @@
+server {
+    listen  [::]:80;
+
+    server_name  DOMAIN;
+
+    access_log  LOGDIR/access.log;
+
+    location / {
+        proxy_pass  http://localhost:PORT;
+    }
+}
+
+server {
+    listen  [::]:80;
+    server_name www.DOMAIN;
+    access_log  LOGDIR/access.log;
+    return 301 $scheme://DOMAIN$request_uri;
+}
