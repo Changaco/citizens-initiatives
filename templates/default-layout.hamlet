@@ -1,22 +1,20 @@
-<header class="navbar navbar-default">
-    <div class="container">
-        <ul class="nav navbar-nav pull-left">
-            <li>
-                <a class="navbar-brand" href="@{HomeR}">_{MsgSiteTitle}
-        <ul class="nav navbar-nav pull-right">
-            <li>
-                <a href="@{AboutR}">_{MsgAbout}
+<div id="wrapper">
 
-<div class="container" id="main" role="main">
-    $maybe msg <- mmsg
-        <div id="message">#{msg}
-    ^{widget}
+    <header class="navbar navbar-default">
+        <div class="container">
+            <ul class="nav navbar-nav pull-left">
+                <li>
+                    <a class="navbar-brand" href="@{HomeR}">_{MsgSiteTitle}
+            <ul class="nav navbar-nav pull-right">
+                <li>
+                    <a href="@{AboutR}">_{MsgAbout}
 
-<footer class="container">
-    <ul class="nav navbar-nav">
-        <li>
-            <a href="@{AboutR}">_{MsgAbout}
-        <li>
-            <a href="#{twitterAccount}">Twitter
-        <li>
-            <a href="#{githubRepo}">GitHub
+    <div class="container" id="main" role="main">
+        $maybe msg <- mmsg
+            <div id="message">#{msg}
+        ^{widget}
+
+    <footer>
+        <a href="@{AboutR}">_{MsgAbout}
+        <a href="#{twitterAccount}">Twitter
+        <a href="#{githubRepo}">GitHub
