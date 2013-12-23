@@ -40,6 +40,8 @@ import Text.XML
 import Text.XML.Cursor
 import Yesod.Core.Types (Logger(..), loggerPutStr)
 
+import Settings.Development (development)
+
 
 data ScraperEnv pc = ScraperEnv
     { scraperBaseReq :: Request
@@ -72,17 +74,19 @@ instance MonadState (ScraperA pc) where
     put = Scraper . put
 
 instance MonadLogger (ScraperA pc) where
-    monadLoggerLog loc src level msg = do
-        logger <- asks scraperLogger
-        now <- liftIO $ loggerDate logger
-        let logStr = toLogStr now ++
-                     " [" ++
-                         toLogStr (showLevel level) ++
-                         (if null src then "" else "#" ++ toLogStr src) ++
-                     "] " ++
-                     toLogStr msg ++
-                     " @(" ++ showFileLocation loc ++ ")\n"
-        liftIO $ loggerPutStr logger logStr
+    monadLoggerLog loc src level msg
+        | development || level == LevelWarn || level == LevelError = do
+            logger <- asks scraperLogger
+            now <- liftIO $ loggerDate logger
+            let logStr = toLogStr now ++
+                        " [" ++
+                            toLogStr (showLevel level) ++
+                            (if null src then "" else "#" ++ toLogStr src) ++
+                        "] " ++
+                        toLogStr msg ++
+                        " @(" ++ showFileLocation loc ++ ")\n"
+            liftIO $ loggerPutStr logger logStr
+        | otherwise = return ()
 
 showLevel :: LogLevel -> String
 showLevel (LevelOther t) = unpack t
