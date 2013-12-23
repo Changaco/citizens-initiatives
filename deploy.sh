@@ -49,7 +49,7 @@ scp $appname.tar.xz $remote:$destdir
 rm $appname.tar.xz
 
 # Run the app
-ssh $remote bash <<EOF
+ssh $remote "bash -l" <<EOF
     # Unpack
     cd $destdir
     tar -xavf $appname.tar.xz || exit 1
@@ -83,6 +83,7 @@ ssh $remote bash <<EOF
     disown
 
     # Tell nginx to switch to the new port
+    chmod g+rX -R $destdir  # allow nginx to serve the static files
     sed -e "s|DOMAIN|$domain|g" -e "s|PORT|\$new_port|g" \
         -e "s|LOGDIR|$logdir|g" -e "s|APPDIR|$destdir|g" \
         <$destdir/config/nginx.conf.in >$destdir/config/nginx.conf || exit 1
