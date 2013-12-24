@@ -31,6 +31,7 @@ TargetPercentage: % de l'objectif
 Web: Web
 Paper: Papier
 Quota: Quota
+QuotaPercentage: % du quota
 
 # Pays
 CountryAT: Autriche

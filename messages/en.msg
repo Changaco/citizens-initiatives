@@ -31,6 +31,7 @@ TargetPercentage: % of target
 Web: Web
 Paper: Paper
 Quota: Quota
+QuotaPercentage: % of quota
 
 # Countries
 CountryAT: Austria

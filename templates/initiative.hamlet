@@ -49,6 +49,7 @@ $if not $ null counters
                     <th scope="col">_{MsgWeb}
                     <th scope="col">_{MsgPaper}
                     <th scope="col">_{MsgQuota}
+                    <th scope="col">_{MsgQuotaPercentage}
             <tbody>
                 $forall counter <- counters
                     <tr>
@@ -70,3 +71,5 @@ $if not $ null counters
                                 #{show paper}
                         <td class="number">
                             #{show $ iCounterQuota counter}
+                        <td class="number">
+                            #{showPercent $ percent (iCounterTotal counter) (iCounterQuota counter)}

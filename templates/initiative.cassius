@@ -7,6 +7,7 @@
 
 table
     font-family: Arial
+    font-size: 13px
     border-collapse: collapse
     margin-bottom: 1em
 td, th
@@ -15,10 +16,8 @@ td, th
 th
     text-align: center
     padding: 6px
-td
-    font-size: 13px
-    &.number
-        text-align: right
+td.number
+    text-align: right
 thead > tr
     background-color: #f0f0f0
 tbody > tr
