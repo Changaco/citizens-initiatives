@@ -67,7 +67,7 @@ ssh $remote "bash -l" <<EOF
     # Try to launch the app
     mkdir -p "$logdir"
     logfile="$logdir/yesod.log"
-    ./bin/$appname Production --port \$new_port &>"\$logfile" &
+    ./bin/$appname Production --port \$new_port &>>"\$logfile" &
     new_pid=\$!
     echo \$new_pid >$destdir/pid
     tail -f "\$logfile" &
