@@ -4,6 +4,7 @@ import ClassyPrelude
 
 import Control.Monad.Trans.Control
 import Data.Aeson
+import qualified Data.Set as Set
 import qualified Data.Text as T
 import Database.Persist
 import Language.Haskell.TH
@@ -11,6 +12,13 @@ import Language.Haskell.TH.Quote
 import Network.URI
 import System.IO (hFlush)
 import Text.Printf
+
+
+nubOrd :: (Ord a) => [a] -> [a]
+nubOrd = go Set.empty
+  where go _ [] = []
+        go s (x:xs) | Set.member x s = go s xs
+                    | otherwise      = x : go (Set.insert x s) xs
 
 
 printErrors :: (MonadIO m, MonadBaseControl IO m) => m () -> m ()

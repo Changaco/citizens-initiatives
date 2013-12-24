@@ -10,13 +10,15 @@ import Widgets
 
 getInitiativeTranslation :: Entity Initiative -> Handler ITranslation
 getInitiativeTranslation (Entity iid i) = do
-    langs <- map (fst . breakOn "-") <$> languages
-    translations <- mapM (runDB . getBy . UniqueTranslation iid) (langs++["en"])
-    case catMaybes translations of
-        (Entity _ t:_) -> return t
-        [] -> do
-            e <- runDB $ getBy404 $ UniqueTranslation iid $ initiativeRegistrationLanguage i
-            return $ entityVal e
+    langs <- nubOrd <$> (++["en"]) <$> map (fst . breakOn "-") <$> languages
+    go $ take 4 langs
+  where
+    go (lang:rest) = do
+        maybeTranslation <- runDB $ getBy $ UniqueTranslation iid lang
+        maybe (go rest) (return . entityVal) maybeTranslation
+    go [] = do
+        e <- runDB $ getBy404 $ UniqueTranslation iid $ initiativeRegistrationLanguage i
+        return $ entityVal e
 
 
 getTotalCounter :: InitiativeId -> Handler (Int, Int)
