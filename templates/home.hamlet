@@ -5,14 +5,20 @@ $forall (Entity iid i, signatures, target, translation, daysLeft) <- initiatives
         <h3 class="col-md-12">#{iTranslationTitle translation} #
             <small>#{iTranslationSubtitle translation}
         <div class="col-md-9">
-            $with website <- iTranslationWebsite translation
-                <p>
-                    <strong>_{MsgWebsite}:
-                    <a class="website" href="#{website}">#{website}
-
             <p class="subject">
                 <strong>_{MsgSubject}:
                 #{iTranslationSubject translation}
+
+            <div class="external-links">
+                $with website <- iTranslationWebsite translation
+                    <p>
+                        <strong>_{MsgWebsite}:
+                        <a class="website" href="#{website}">#{website}
+
+                $if hasSocialLinks translation
+                    <p>
+                        <strong>_{MsgSocialLinks}:
+                        <span class="social-links">^{socialLinks translation}
 
             <a class="btn btn-primary" href="@{InitiativeR iid}">
                 _{MsgReadMore}

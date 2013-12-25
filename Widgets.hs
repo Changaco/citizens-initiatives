@@ -32,3 +32,21 @@ $else
         <a class="btn btn-success disabled">
             _{MsgSignOnline}
 |]
+
+
+socialLink :: Text -> Text -> Text -> Widget
+socialLink href code content = [whamlet|
+$if not $ null href
+    <a href="#{href}">
+        <i class="fa fa-lg fa-#{code}"></i>
+        <span class="sr-only"> #{content}
+|]
+
+
+socialLinks :: ITranslation -> Widget
+socialLinks ITranslation{..} = [whamlet|
+^{socialLink iTranslationFacebook "facebook-square" "Facebook"}
+^{socialLink iTranslationTwitter "twitter" "Twitter"}
+^{socialLink iTranslationGoogle "google-plus" "Google+"}
+^{socialLink iTranslationYoutube "youtube" "Youtube"}
+|]

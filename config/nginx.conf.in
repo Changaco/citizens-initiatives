@@ -23,6 +23,8 @@ server {
 
     access_log  LOGDIR/access.log;
 
+    add_header Access-Control-Allow-Origin "*";
+
     location / {
         alias APPDIR/static/;
         try_files $uri @yesod;

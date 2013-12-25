@@ -8,6 +8,13 @@ import Data.Time
 import Widgets
 
 
+hasSocialLinks :: ITranslation -> Bool
+hasSocialLinks ITranslation{..} = (not $ null iTranslationFacebook)
+                               || (not $ null iTranslationTwitter)
+                               || (not $ null iTranslationGoogle)
+                               || (not $ null iTranslationYoutube)
+
+
 getInitiativeTranslation :: Entity Initiative -> Handler ITranslation
 getInitiativeTranslation (Entity iid i) = do
     langs <- nubOrd <$> (++["en"]) <$> map (fst . breakOn "-") <$> languages

@@ -30,6 +30,10 @@ ITranslation
     website Text
     annex Text
     draftLegalAct Text
+    facebook Text default=''
+    twitter Text default=''
+    google Text default=''
+    youtube Text default=''
     UniqueTranslation initiativeId lang
     deriving Eq
 

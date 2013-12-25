@@ -3,3 +3,7 @@
     margin-top: 1em
     & > .col-md-9
         margin-bottom: 15px
+
+.external-links > p
+    display: inline-block
+    margin-right: 20px

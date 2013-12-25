@@ -14,6 +14,10 @@
             <strong>_{MsgWebsite}:
             $with website <- iTranslationWebsite
                 <a class="website" href="#{website}">#{website}
+        $if hasSocialLinks iTranslation
+            <p class="social-links">
+                <strong>_{MsgSocialLinks}:
+                ^{socialLinks iTranslation}
         $if (not $ null iTranslationAnnex) || (not $ null iTranslationDraftLegalAct)
             <p class="documents">
                 <strong>_{MsgDocuments}:

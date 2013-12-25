@@ -106,6 +106,10 @@ scrapeITranslation uri iid lang refWebsite = do
                 byClass "subcontentText" &/ element "a" &| attribute "href")
             (zeroOrOne "" $ contentBoxes!!6 $// docLinks)
             (zeroOrOne "" $ contentBoxes!!7 $// docLinks)
+            (maybe "" iTranslationFacebook maybeTranslation)
+            (maybe "" iTranslationTwitter maybeTranslation)
+            (maybe "" iTranslationGoogle maybeTranslation)
+            (maybe "" iTranslationYoutube maybeTranslation)
 
     runDB_ $ do
         when (maybeInitiative /= Just initiative) $ repsert iid initiative

@@ -19,6 +19,7 @@ SignaturesCollected i@Int: #{show i} signatures collected
 SignaturesTable: Signatures by country
 SignOnline: Sign online
 SignOnlineNotReady: The online collection system of this initiative is not ready yet.
+SocialLinks: Social networks
 Subject: Subject
 Website: Website
 
