@@ -25,5 +25,5 @@ $forall (Entity iid i, signatures, target, translation, daysLeft) <- initiatives
 
         <div class="col-md-3">
             ^{signaturesWidget signatures target}
-            <p class="days-left">_{MsgDaysLeft daysLeft}
+            ^{daysLeftWidget daysLeft}
             ^{signButton $ initiativeOcsUrl i}

@@ -34,7 +34,7 @@
     <div class="col-md-3">
         <h4>_{MsgSignatures}
         ^{signaturesWidget signatures target}
-        <p class="days-left">_{MsgDaysLeft daysLeft}
+        ^{daysLeftWidget daysLeft}
         ^{signButton initiativeOcsUrl}
 
 $if not $ null counters

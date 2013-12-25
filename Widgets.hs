@@ -3,6 +3,12 @@ module Widgets where
 import Import
 
 
+daysLeftWidget :: Int -> Widget
+daysLeftWidget daysLeft = [whamlet|
+<p class="days-left"><i class="fa fa-clock-o"></i> _{MsgDaysLeft daysLeft}
+|]
+
+
 progressBar :: Double -> Widget
 progressBar p = [whamlet|
 <div class="progress">
