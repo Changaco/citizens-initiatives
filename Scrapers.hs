@@ -70,6 +70,8 @@ splitTitle title =
 scrapeITranslation :: URI -> InitiativeId -> Text -> Text -> Scraper Text
 scrapeITranslation uri iid lang refWebsite = do
     maybeInitiative <- runDB $ get iid
+    maybeTranslation <- runDB (getBy $ UniqueTranslation iid lang) >>=
+                        return . fmap entityVal
     baseReq <- asks scraperBaseReq
     (_, docCursor) <- scrapeHtml baseReq uri
     let contentBoxes = docCursor $// byId "center" &/ byClass "contentBox"
@@ -95,6 +97,8 @@ scrapeITranslation uri iid lang refWebsite = do
                     &/ anyElement &/ content)!!0)
             (maybe "" initiativeOcsUrl maybeInitiative)
         (title, subtitle) = splitTitle $ cleanTitle $ firstBoxStrings!!1
+        website = zeroOrOne refWebsite $ concat $ contentBoxes!!5 $/
+                  byClass "subcontentText" &/ element "a" &| attribute "href"
         itranslation = ITranslation
             iid
             lang
@@ -102,8 +106,7 @@ scrapeITranslation uri iid lang refWebsite = do
             subtitle
             (strip $ getText $ contentBoxes!!1 $/ byClass "subcontentText")
             (strip $ getText $ contentBoxes!!2 $/ byClass "subcontentText")
-            (zeroOrOne refWebsite $ concat $ contentBoxes!!5 $/
-                byClass "subcontentText" &/ element "a" &| attribute "href")
+            (maybe website iTranslationWebsite maybeTranslation)
             (zeroOrOne "" $ contentBoxes!!6 $// docLinks)
             (zeroOrOne "" $ contentBoxes!!7 $// docLinks)
             (maybe "" iTranslationFacebook maybeTranslation)
