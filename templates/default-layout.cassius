@@ -31,7 +31,7 @@ p
     & > :first-child
         margin-right: 5px
     & > .progress
-        width: 260px
+        width: 210px
 
 .social-links > a
     display: inline-block
