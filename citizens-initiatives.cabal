@@ -76,11 +76,13 @@ library
                  , persistent
                  , persistent-postgresql
                  , persistent-template
+                 , process >= 1.2.0.0
                  , regex-pcre
                  , resourcet
                  , shakespeare-css
                  , shakespeare-js
                  , shakespeare-text
+                 , system-filepath
                  , template-haskell
                  , text
                  , time
