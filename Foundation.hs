@@ -123,7 +123,6 @@ instance Yesod App where
             $(combineScripts 'StaticR
                 [ js_jquery_js
                 , js_bootstrap_js
-                , js_citizens_initiatives_js
                 ])
             $(widgetFile "default-layout")
         giveUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
