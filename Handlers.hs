@@ -33,9 +33,7 @@ getTotalCounter iid = do
     maybeCounter <- runDB $ getBy (UniqueCounter iid "")
     case maybeCounter of
         Just (Entity _ c) -> return (iCounterTotal c, iCounterTarget c)
-        Nothing -> do
-            $(logError) ("total counter not found for iid="++tshowKeyUnsafe iid)
-            return (0, -1)
+        Nothing -> return (0, -1)
 
 
 getHomeR :: Handler Html
