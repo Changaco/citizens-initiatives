@@ -234,7 +234,7 @@ saveMapData (Entity iid Initiative{..}) MapData{..} = do
         counters <- forM l $ \(Entity counterId counter, CountryData{..}) -> do
             let maybeWebCountYesterday =
                     case lookup countryCode webCountersYesterday of
-                        Just c | iWebCounterTime c > 85500 -> Just $ iWebCounterCount c
+                        Just c | iWebCounterTime c > 84600 -> Just $ iWebCounterCount c
                         _ | yesterday == dayZero -> Just 0
                         _ -> Nothing
             let webCount = read $ unpack countryCount
