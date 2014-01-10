@@ -66,8 +66,9 @@ $if not $ null counters
                             #{show $ iCounterTotal counter}
                         <td class="number">
                             #{show $ iCounterTarget counter}
-                        <td class="number">
-                            #{showPercent $ iCounterTargetPercentage counter}
+                        $with p <- iCounterTargetPercentage counter
+                            <td class="number #{success p}">
+                                #{showPercent p}
                         <td class="number">
                             #{show $ iCounterWeb counter}
                         <td class="number">
@@ -75,6 +76,7 @@ $if not $ null counters
                                 #{show paper}
                         <td class="number">
                             #{show $ iCounterQuota counter}
-                        <td class="number">
-                            #{showPercent $ percent (iCounterTotal counter) (iCounterQuota counter)}
+                        $with p <- percent (iCounterTotal counter) (iCounterQuota counter)
+                            <td class="number #{success p}">
+                                #{showPercent p}
     <p>_{MsgSignaturesExplanation}

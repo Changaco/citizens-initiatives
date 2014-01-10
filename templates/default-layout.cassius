@@ -65,6 +65,9 @@ th
     padding: 6px
 td.number
     text-align: right
+td.success
+    background-color: #DFF0D8
+    color: #3C763D
 thead > tr
     background-color: #f0f0f0
 tbody > tr

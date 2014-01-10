@@ -66,6 +66,9 @@ percent x y = fromIntegral x / fromIntegral y
 showPercent :: Double -> String
 showPercent p = printf "%.1f%%" (p * 100)
 
+success :: Double -> Text
+success p = if p >= 1 then "success" else ""
+
 
 -- * Persistent
 
