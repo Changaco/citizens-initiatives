@@ -16,6 +16,7 @@ OtherLanguages: Other languages
 ReadMore: Read more
 Signatures: Signatures
 SignaturesCollected i@Int: #{show i} signatures collected
+SignaturesExplanation: To be validated, the initiative must collect a total of more than one million signatures, and reach the signatures quota in at least 7 countries.
 SignaturesTable: Signatures by country
 SignOnline: Sign online
 SignOnlineNotReady: The online collection system of this initiative is not ready yet.
@@ -33,6 +34,8 @@ Web: Web
 Paper: Paper
 Quota: Quota
 QuotaPercentage: % of quota
+
+QuotaExplanation: The quota needs to be reached in at least 7 countries for the initiative to be validated.
 
 # Countries
 CountryAT: Austria

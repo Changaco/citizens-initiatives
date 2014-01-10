@@ -77,3 +77,4 @@ $if not $ null counters
                             #{show $ iCounterQuota counter}
                         <td class="number">
                             #{showPercent $ percent (iCounterTotal counter) (iCounterQuota counter)}
+    <p>_{MsgSignaturesExplanation}

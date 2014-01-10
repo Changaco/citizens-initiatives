@@ -16,6 +16,7 @@ OtherLanguages: Autres langues
 ReadMore: En savoir plus
 Signatures: Signatures
 SignaturesCollected i: #{show i} signatures collectées
+SignaturesExplanation: Pour être validée, l'initiative doit récolter un total de plus d'un million de signatures, et atteindre le quota de signatures dans au moins 7 pays.
 SignaturesTable: Signatures par pays
 SignOnline: Signer en ligne
 SignOnlineNotReady: Le système de collecte en ligne de cette initiative n'est pas encore prêt.
