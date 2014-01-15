@@ -84,3 +84,15 @@ tbody > tr
         background-color: #e0e0ff
     &.total:hover
         background-color: #dadafa
+
+th > .caret
+    display: none
+    margin: 0
+th.sortr-desc > .caret
+    display: inline-block
+    margin-left: 6px
+th.sortr-asc > .caret
+    display: inline-block
+    margin-left: 6px
+    border-bottom: 4px solid
+    border-top: 0 none

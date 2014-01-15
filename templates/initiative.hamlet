@@ -44,20 +44,20 @@ $if not $ null counters
     <h4>_{MsgSignaturesTable}
     <p data-toggle="now">
     <div class="table-responsive">
-        <table>
+        <table class="jquery-sortr">
             <thead>
                 <tr>
-                    <th scope="col">_{MsgCountryCode}
-                    <th scope="col">_{MsgCountryName}
+                    <th scope="col">_{MsgCountryCode}^{caret}
+                    <th scope="col">_{MsgCountryName}^{caret}
                     $if daysLeft >= 0
-                        <th scope="col">_{MsgToday}
-                    <th scope="col">_{MsgTotal}
-                    <th scope="col">_{MsgTarget}
-                    <th scope="col">_{MsgTargetPercentage}
-                    <th scope="col">_{MsgWeb}
-                    <th scope="col">_{MsgPaper}
-                    <th scope="col">_{MsgQuota}
-                    <th scope="col">_{MsgQuotaPercentage}
+                        <th scope="col">_{MsgToday}^{caret}
+                    <th scope="col">_{MsgTotal}^{caret}
+                    <th scope="col">_{MsgTarget}^{caret}
+                    <th scope="col" class="sortr-desc">_{MsgTargetPercentage}^{caret}
+                    <th scope="col">_{MsgWeb}^{caret}
+                    <th scope="col">_{MsgPaper}^{caret}
+                    <th scope="col">_{MsgQuota}^{caret}
+                    <th scope="col">_{MsgQuotaPercentage}^{caret}
             <tbody>
                 $forall counter <- counters
                     <tr class="#{isTotal counter}">

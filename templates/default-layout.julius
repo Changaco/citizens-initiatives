@@ -4,4 +4,5 @@ $(function () {
     $('[data-toggle="now"]').text(
         now.toLocaleDateString()+' '+now.toLocaleTimeString()
     );
+    $('.jquery-sortr').sortr({move_classes: true});
 });

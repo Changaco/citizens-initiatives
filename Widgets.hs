@@ -3,6 +3,10 @@ module Widgets where
 import Import
 
 
+caret :: Widget
+caret = [whamlet|<span class="caret">|]
+
+
 daysLeftWidget :: Int -> Widget
 daysLeftWidget daysLeft | daysLeft < 0 = [whamlet||]
 daysLeftWidget daysLeft = [whamlet|
