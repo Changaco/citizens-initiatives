@@ -1,6 +1,9 @@
 <h2>#{iTranslationTitle} #
     <small>#{iTranslationSubtitle}
 
+$if daysLeft < 0
+    <div class="alert alert-danger">_{MsgInitiativeEnded}
+
 <div class="row">
     <div class="col-md-9">
         <h4>_{MsgSubject}
@@ -35,7 +38,7 @@
         <h4>_{MsgSignatures}
         ^{signaturesWidget signatures target}
         ^{daysLeftWidget daysLeft}
-        ^{signButton initiativeOcsUrl}
+        ^{signButton initiativeOcsUrl daysLeft}
 
 $if not $ null counters
     <h4>_{MsgSignaturesTable}
@@ -46,7 +49,8 @@ $if not $ null counters
                 <tr>
                     <th scope="col">_{MsgCountryCode}
                     <th scope="col">_{MsgCountryName}
-                    <th scope="col">_{MsgToday}
+                    $if daysLeft >= 0
+                        <th scope="col">_{MsgToday}
                     <th scope="col">_{MsgTotal}
                     <th scope="col">_{MsgTarget}
                     <th scope="col">_{MsgTargetPercentage}
@@ -59,9 +63,10 @@ $if not $ null counters
                     <tr>
                         <td>#{toUpper $ iCounterCountryCode counter}
                         <td>_{countryNameMsg $ iCounterCountryCode counter}
-                        <td class="number">
-                            $maybe today <- iCounterToday counter
-                                +#{show today}
+                        $if daysLeft >= 0
+                            <td class="number">
+                                $maybe today <- iCounterToday counter
+                                    +#{show today}
                         <td class="number">
                             #{show $ iCounterTotal counter}
                         <td class="number">

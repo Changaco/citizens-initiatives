@@ -10,6 +10,8 @@ Annex: Annex
 DaysLeft i@Int: #{show i} day#{plural i "" "s"} left
 Documents: Documents
 DraftLegalAct: Draft legal act
+InitiativeEnded: This initiative has ended, it is no longer possible to sign it.
+LastDay: ends today at 23:59 (CET)
 Links: Links
 Objectives: Objectives
 OtherLanguages: Other languages

@@ -10,6 +10,8 @@ Annex: Annexe
 DaysLeft i: #{show i} #{plural i "jour restant" "jours restants"}
 Documents: Documents
 DraftLegalAct: Projet d'acte législatif
+InitiativeEnded: Cette initiative est terminée, la signer n'est plus possible.
+LastDay: prend fin aujourd'hui à 23h59 (HEC)
 Links: Liens
 Objectives: Objectifs
 OtherLanguages: Autres langues

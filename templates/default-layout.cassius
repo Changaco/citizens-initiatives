@@ -33,6 +33,11 @@ p
     & > .progress
         width: 210px
 
+.days-left
+    display: inline-block
+    padding: 3px
+    margin: 0
+
 .social-links > a
     display: inline-block
     margin-left: 10px
