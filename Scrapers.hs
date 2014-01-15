@@ -198,8 +198,8 @@ scrapeMapData e@(Entity _ Initiative{..}) = do
 
 saveMapData :: Entity Initiative -> MapData -> Scraper ()
 saveMapData (Entity iid Initiative{..}) MapData{..} = do
-    now <- liftIO getCurrentTime
-    let (today, time) = (utctDay now, round $ utctDayTime now)
+    (now, LocalTime{..}) <- liftIO getCurrentTimes
+    let (today, time) = (localDay, round $ timeOfDayToTime localTimeOfDay)
         yesterday = addDays (-1) today
         dayZero = addDays (-1) initiativeStart
         mapFromOCS = Map.fromList $ map (\a -> (countryCode a, a)) mdCountries
@@ -275,8 +275,8 @@ saveMapData (Entity iid Initiative{..}) MapData{..} = do
 
 scrapeCounters :: Scraper ()
 scrapeCounters = do
-    now <- liftIO $ getCurrentTime
-    initiatives <- runDB $ selectList [InitiativeDeadline >=. utctDay now]
+    (_, now) <- liftIO $ getCurrentTimes
+    initiatives <- runDB $ selectList [InitiativeDeadline >=. localDay now]
                                       [Asc InitiativeDeadline]
     when (null initiatives) $
         error "There are no ongoing initiatives in the DB."

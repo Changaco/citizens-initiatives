@@ -38,8 +38,8 @@ getTotalCounter iid = do
 
 getHomeR :: Handler Html
 getHomeR = do
-    now <- liftIO $ getCurrentTime
-    let today = utctDay now
+    (_, now) <- liftIO $ getCurrentTimes
+    let today = localDay now
     initiatives <- do
         l <- runDB $ selectList [InitiativeDeadline >=. today]
                                 [Asc InitiativeDeadline]
@@ -55,8 +55,8 @@ getHomeR = do
 
 getInitiativeR :: InitiativeId -> Handler Html
 getInitiativeR iid = do
-    now <- liftIO $ getCurrentTime
-    let today = utctDay now
+    (_, now) <- liftIO $ getCurrentTimes
+    let today = localDay now
     initiative@Initiative{..} <- runDB $ get404 iid
     iTranslation <- getInitiativeTranslation $ Entity iid initiative
     otherTranslations <- runDB $ map (iTranslationLang . entityVal) <$>

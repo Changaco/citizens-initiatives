@@ -6,6 +6,7 @@ import Control.Monad.Trans.Control
 import Data.Aeson
 import qualified Data.Set as Set
 import qualified Data.Text as T
+import Data.Time
 import Database.Persist
 import Language.Haskell.TH
 import Language.Haskell.TH.Quote
@@ -100,6 +101,15 @@ showKeyUnsafe = unpack . tshowKeyUnsafe
 
 tshowKeyUnsafe :: Key val -> Text
 tshowKeyUnsafe = either error id . fromPersistValueText . unKey
+
+
+-- * Time
+
+getCurrentTimes :: IO (UTCTime, LocalTime)
+getCurrentTimes = do
+    now <- getCurrentTime
+    localZone <- getTimeZone now
+    return (now, utcToLocalTime localZone now)
 
 
 -- * URI
