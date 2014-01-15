@@ -74,9 +74,13 @@ td.success
     background-color: #DFF0D8
     color: #3C763D
 thead > tr
-    background-color: #f0f0f0
+    background-color: #d5d5ff
 tbody > tr
     &:nth-child(2n)
         background-color: #fafafa
     &:hover
         background-color: #f5f5f5
+    &.total
+        background-color: #e0e0ff
+    &.total:hover
+        background-color: #dadafa

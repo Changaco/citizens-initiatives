@@ -72,6 +72,9 @@ getInitiativeR iid = do
         let ITranslation{..} = iTranslation
         setTitle $ toHtml $ iTranslationTitle
         $(widgetFile "initiative")
+  where
+    isTotal :: ICounter -> Text
+    isTotal counter = if null $ iCounterCountryCode counter then "total" else ""
 
 
 getAboutR :: Handler Html

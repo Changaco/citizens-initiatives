@@ -60,7 +60,7 @@ $if not $ null counters
                     <th scope="col">_{MsgQuotaPercentage}
             <tbody>
                 $forall counter <- counters
-                    <tr>
+                    <tr class="#{isTotal counter}">
                         <td>#{toUpper $ iCounterCountryCode counter}
                         <td>_{countryNameMsg $ iCounterCountryCode counter}
                         $if daysLeft >= 0
