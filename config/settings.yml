@@ -13,5 +13,5 @@ Staging:
   <<: *defaults
 
 Production:
-  approot: "//citizens-initiatives.changaco.net"
+  approot: "//citizens-initiatives.oy.lc"
   <<: *defaults

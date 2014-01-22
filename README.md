@@ -1,1 +1,1 @@
-Source code of http://citizens-initiatives.changaco.net/ a common platform for Citizens' Initiatives.
+Source code of http://citizens-initiatives.oy.lc/ a common platform for Citizens' Initiatives.

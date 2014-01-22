@@ -1,11 +1,11 @@
 #!/bin/bash
 
 appname="citizens-initiatives"
-domain="citizens-initiatives.changaco.net"
+domain="citizens-initiatives.oy.lc"
 libdir="lib/ghc-7.6.3"
 sandbox_libdir=".cabal-sandbox/lib/x86_64-linux-ghc-7.6.3"
 
-remote="citizens-initiatives@changaco.net"
+remote="citizens-initiatives@changaco.oy.lc"
 homedir="$(ssh $remote 'echo $HOME')"
 appsdir="$homedir/apps"
 ssh $remote "mkdir -p $appsdir; mkdir $appsdir/$appname.lock" || exit 1
