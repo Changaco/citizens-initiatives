@@ -1,6 +1,6 @@
 module Scrapers where
 
-import ClassyPrelude hiding (IOData(..))
+import ClassyPrelude hiding (IOData(..), head)
 import Prelude (head, read, tail, (!!))
 
 import Control.Concurrent (forkIO, threadDelay)
@@ -18,7 +18,6 @@ import Database.Persist
 import Network.HTTP.Client
 import Network.URI
 import System.IO (IOMode(..), withFile)
-import System.Locale (defaultTimeLocale)
 import Text.Regex.PCRE
 import Text.XML hiding (writeFile)
 import Text.XML.Cursor

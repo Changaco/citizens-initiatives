@@ -19,10 +19,12 @@ import ClassyPrelude
 
 import Control.Failure
 import Control.Monad.Base
+import Control.Monad.Catch
 import Control.Monad.Logger
 import Control.Monad.Reader
 import Control.Monad.State.Strict
 import Control.Monad.Trans.Control
+import Control.Monad.Trans.Resource
 import Data.Aeson
 import Data.Conduit
 import Data.Conduit.Attoparsec (sinkParser)
@@ -53,7 +55,7 @@ data ScraperEnv pc = ScraperEnv
 
 newtype ScraperA pc a = Scraper (StateT CookieJar (ReaderT (ScraperEnv pc) (ResourceT IO)) a)
     deriving (Applicative, Functor, Monad, MonadBase IO, MonadIO, MonadResource,
-              MonadThrow, MonadUnsafeIO)
+              MonadThrow)
 
 instance MonadBaseControl IO (ScraperA pc) where
     newtype StM (ScraperA pc) a = StMS (ScraperA pc a)

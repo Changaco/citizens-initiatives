@@ -51,13 +51,14 @@ library
     build-depends: base
                  , classy-prelude
                  , aeson
-                 , attoparsec-conduit
                  , bytestring
                  , conduit
+                 , conduit-extra
                  , containers
                  , data-default
                  , directory
                  , dom-selector
+                 , exceptions
                  , failure
                  , fast-logger
                  , hamlet
@@ -79,9 +80,7 @@ library
                  , process >= 1.2.0.0
                  , regex-pcre
                  , resourcet
-                 , shakespeare-css
-                 , shakespeare-js
-                 , shakespeare-text
+                 , shakespeare
                  , system-filepath
                  , template-haskell
                  , text

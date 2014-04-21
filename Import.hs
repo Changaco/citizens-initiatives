@@ -2,7 +2,7 @@ module Import
     ( module Import
     ) where
 
-import           ClassyPrelude        as Import
+import           ClassyPrelude        as Import hiding (parseTime)
 
 import           Yesod                as Import hiding (Route (..))
 
