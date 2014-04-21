@@ -15,6 +15,10 @@ import System.IO (hFlush)
 import Text.Printf
 
 
+fallback :: (Eq a, Monoid a) => a -> a -> a
+fallback a b = if a == mempty then b else a
+
+
 nubOrd :: (Ord a) => [a] -> [a]
 nubOrd = go Set.empty
   where go _ [] = []

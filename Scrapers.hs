@@ -105,7 +105,7 @@ scrapeITranslation uri iid lang refWebsite = do
             subtitle
             (strip $ getText $ contentBoxes!!1 $/ byClass "subcontentText")
             (strip $ getText $ contentBoxes!!2 $/ byClass "subcontentText")
-            (maybe website iTranslationWebsite maybeTranslation)
+            (maybe "" iTranslationWebsite maybeTranslation `fallback` website)
             (zeroOrOne "" $ contentBoxes!!6 $// docLinks)
             (zeroOrOne "" $ contentBoxes!!7 $// docLinks)
             (maybe "" iTranslationFacebook maybeTranslation)
