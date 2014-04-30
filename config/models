@@ -12,7 +12,7 @@ Email
 
 Initiative
     start Day
-    deadline Day
+    end Day
     representative Text
     substitute Text
     otherMembers Text

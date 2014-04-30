@@ -275,8 +275,8 @@ saveMapData (Entity iid Initiative{..}) MapData{..} = do
 scrapeCounters :: Scraper ()
 scrapeCounters = do
     (_, now) <- liftIO $ getCurrentTimes
-    initiatives <- runDB $ selectList [InitiativeDeadline >=. localDay now]
-                                      [Asc InitiativeDeadline]
+    initiatives <- runDB $ selectList [InitiativeEnd >=. localDay now]
+                                      [Asc InitiativeEnd]
     when (null initiatives) $
         error "There are no ongoing initiatives in the DB."
     let (noOcsUrl, withOcsUrl) = partition (null . initiativeOcsUrl . entityVal) initiatives

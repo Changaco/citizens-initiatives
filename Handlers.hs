@@ -41,12 +41,12 @@ getHomeR = do
     (_, now) <- liftIO $ getCurrentTimes
     let today = localDay now
     initiatives <- do
-        l <- runDB $ selectList [InitiativeDeadline >=. today]
-                                [Asc InitiativeDeadline]
+        l <- runDB $ selectList [InitiativeEnd >=. today]
+                                [Asc InitiativeEnd]
         forM l $ \e@(Entity iid i) -> do
             (signatures, target) <- getTotalCounter iid
             translation <- getInitiativeTranslation e
-            let daysLeft = fromInteger $ diffDays (initiativeDeadline i) today
+            let daysLeft = fromInteger $ diffDays (initiativeEnd i) today
             return (e, signatures, target, translation, daysLeft)
     defaultLayout $ do
         setTitleI MsgSiteTitle
@@ -67,7 +67,7 @@ getInitiativeR iid = do
     counters <- runDB $ map entityVal <$>
         selectList [ICounterInitiativeId ==. iid] [Desc ICounterTargetPercentage]
     (signatures, target) <- getTotalCounter iid
-    let daysLeft = fromInteger $ diffDays initiativeDeadline today
+    let daysLeft = fromInteger $ diffDays initiativeEnd today
     defaultLayout $ do
         let ITranslation{..} = iTranslation
         setTitle $ toHtml $ iTranslationTitle
