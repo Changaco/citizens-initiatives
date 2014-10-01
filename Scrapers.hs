@@ -8,7 +8,6 @@ import Control.Monad.Logger
 import Control.Monad.Reader hiding (forM, forM_)
 import Data.Aeson
 import Data.Char (isLower)
-import Data.List (and)
 import qualified Data.Map as Map
 import Data.Text (breakOn, strip)
 import Data.Text.IO (hGetContents, writeFile)
@@ -223,7 +222,7 @@ saveMapData (Entity iid Initiative{..}) MapData{..} = do
             forM_ (Map.elems $ Map.difference mapFromDB mapFromOCS) $ \e -> do
                 let country = iCounterCountryCode $ entityVal e
                 $(logWarn) ("The OCS didn't return data for"++
-                            " iid="++tshowKeyUnsafe iid++
+                            " iid="++tshow iid++
                             " country="++country)
             l <- forM (Map.elems $ Map.difference mapFromOCS mapFromDB) $ \d -> do
                 let c = ICounter iid (countryCode d) now Nothing 0 Nothing 0 0 0 0

@@ -11,7 +11,7 @@ import Yesod.Default.Config
 import Yesod.Default.Util (addStaticContentExternal)
 import Yesod.Static
 import qualified Database.Persist
-import Database.Persist.Sql (SqlPersistT)
+import Database.Persist.Sql (SqlBackend)
 import Network.HTTP.Conduit (Manager)
 import System.IO.Unsafe (unsafePerformIO)
 import Text.Hamlet (hamletFile)
@@ -162,7 +162,7 @@ instance Yesod App where
 
 -- How to run database actions.
 instance YesodPersist App where
-    type YesodPersistBackend App = SqlPersistT
+    type YesodPersistBackend App = SqlBackend
     runDB = defaultRunDB persistConfig connPool
 instance YesodPersistRunner App where
     getDBRunner = defaultGetDBRunner connPool
@@ -186,6 +186,8 @@ instance YesodAuth App where
     authPlugins _ = [authBrowserId def, authGoogleEmail]
 
     authHttpManager = httpManager
+
+instance YesodAuthPersist App
 
 -- This instance is required to use forms. You can modify renderMessage to
 -- achieve customized and internationalized form validation messages.

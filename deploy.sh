@@ -2,8 +2,9 @@
 
 appname="citizens-initiatives"
 domain="citizens-initiatives.oy.lc"
-libdir="lib/ghc-7.6.3"
-sandbox_libdir=".cabal-sandbox/lib/x86_64-linux-ghc-7.6.3"
+ghc_version="7.8.3"
+libdir="lib/ghc-$ghc_version"
+sandbox_libdir=".cabal-sandbox/lib/x86_64-linux-ghc-$ghc_version"
 
 remote="citizens-initiatives@changaco.oy.lc"
 homedir="$(ssh $remote 'echo $HOME')"
@@ -25,7 +26,7 @@ mkdir -p "$tmpdir/"{bin,$libdir}
 install -m 755 -D {.cabal-sandbox,$tmpdir}/bin/$appname
 cp -a {.,$tmpdir}/config
 rsync -a static --exclude static/css --exclude static/js $tmpdir
-cp $sandbox_libdir/*/*-ghc7.6.3.so "$tmpdir/$libdir"
+cp $sandbox_libdir/*/*-ghc$ghc_version.so "$tmpdir/$libdir"
 for f in "$tmpdir/$libdir"/*.so "$tmpdir/bin/$appname"; do
     rpath="$(
         objdump -p "$f" | grep RPATH | \

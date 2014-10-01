@@ -15,11 +15,10 @@ module Scraper
     , zeroOrOne
     ) where
 
-import ClassyPrelude
+import ClassyPrelude hiding (MonadReader, ask)
 
 import Control.Failure
 import Control.Monad.Base
-import Control.Monad.Catch
 import Control.Monad.Logger
 import Control.Monad.Reader
 import Control.Monad.State.Strict

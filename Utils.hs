@@ -77,7 +77,6 @@ success p = if p >= 1 then "success" else ""
 
 -- * Persistent
 
-getBy' :: (Show (Unique val), PersistEntityBackend val ~ PersistMonadBackend m, PersistEntity val, PersistUnique m) => Unique val -> m (Entity val)
 getBy' unique = do
     maybeEntity <- getBy unique
     maybe (error ("getBy returned Nothing for: "++show unique))
@@ -85,12 +84,9 @@ getBy' unique = do
 
 
 -- | Like 'insertBy' but returns an 'Entity' instead of an 'Either'.
-insertByValue :: (PersistEntity val, PersistUnique m, PersistEntityBackend val ~ PersistMonadBackend m) => val -> m (Entity val)
 insertByValue val = insertBy val >>= return . either id (\key -> Entity key val)
 
 
-repsertUnique :: (Eq val, PersistEntity val, PersistUnique m, PersistEntityBackend val ~ PersistMonadBackend m) =>
-                 Unique val -> val -> m (Key val)
 repsertUnique unique val = do
     maybeEntity <- getBy unique
     case maybeEntity of
@@ -98,13 +94,6 @@ repsertUnique unique val = do
             when (oldVal /= val) $ replace key val
             return key
         Nothing -> insert val
-
-
-showKeyUnsafe :: Key val -> String
-showKeyUnsafe = unpack . tshowKeyUnsafe
-
-tshowKeyUnsafe :: Key val -> Text
-tshowKeyUnsafe = either error id . fromPersistValueText . unKey
 
 
 -- * Time

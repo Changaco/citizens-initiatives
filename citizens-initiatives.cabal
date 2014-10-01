@@ -47,6 +47,7 @@ library
                 RecordWildCards
                 TemplateHaskell
                 TypeFamilies
+                ViewPatterns
 
     build-depends: base
                  , classy-prelude
