@@ -40,14 +40,17 @@ getHomeR :: Handler Html
 getHomeR = do
     (_, now) <- liftIO $ getCurrentTimes
     let today = localDay now
-    initiatives <- do
-        l <- runDB $ selectList [InitiativeEnd >=. today]
-                                [Asc InitiativeEnd]
-        forM l $ \e@(Entity iid i) -> do
+        getDetails l = forM l $ \e@(Entity iid i) -> do
             (signatures, target) <- getTotalCounter iid
             translation <- getInitiativeTranslation e
             let daysLeft = fromInteger $ diffDays (initiativeEnd i) today
             return (e, signatures, target, translation, daysLeft)
+    ongoingInitiatives <- do
+        l <- runDB $ selectList [InitiativeEnd >=. today] [Asc InitiativeEnd]
+        getDetails l
+    closedInitiatives <- do
+        l <- runDB $ selectList [InitiativeEnd <. today] [Desc InitiativeEnd]
+        getDetails l
     defaultLayout $ do
         setTitleI MsgSiteTitle
         $(widgetFile "home")

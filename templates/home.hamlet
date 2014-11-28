@@ -1,10 +1,15 @@
 <p>_{MsgHomeIntro}
 
-$forall (Entity iid i, signatures, target, translation, daysLeft) <- initiatives
-    <div class="row initiative">
-        <h3 class="col-md-12">#{iTranslationTitle translation} #
-            <small>#{iTranslationSubtitle translation}
+
+<hr>
+<h2>_{MsgOngoingInitiatives}
+
+$forall (Entity iid i, signatures, target, translation, daysLeft) <- ongoingInitiatives
+    <div class="row initiative ongoing">
         <div class="col-md-9">
+            <h3>#{iTranslationTitle translation} #
+                <small>#{iTranslationSubtitle translation}
+
             <p class="subject">
                 <strong>_{MsgSubject}:
                 #{iTranslationSubject translation}
@@ -20,10 +25,28 @@ $forall (Entity iid i, signatures, target, translation, daysLeft) <- initiatives
                         <strong>_{MsgSocialLinks}:
                         <span class="social-links">^{socialLinks translation}
 
-            <a class="btn btn-primary" href="@{InitiativeR iid}">
-                _{MsgReadMore}
-
         <div class="col-md-3">
             ^{signaturesWidget signatures target}
             ^{daysLeftWidget daysLeft}
             ^{signButton (initiativeOcsUrl i) daysLeft}
+            <a class="btn btn-primary" href="@{InitiativeR iid}">
+                _{MsgReadMore}
+
+
+<hr>
+<h2>_{MsgClosedInitiatives}
+
+$forall (Entity iid i, signatures, target, translation, daysLeft) <- closedInitiatives
+    <div class="row initiative closed">
+        <div class="col-md-9">
+            <h3>
+                <a href="@{InitiativeR iid}">#{iTranslationTitle translation} #
+                <small>#{iTranslationSubtitle translation}
+
+            <p class="subject">
+                <strong>_{MsgSubject}:
+                #{iTranslationSubject translation}
+
+        <div class="col-md-3">
+            ^{signaturesWidget signatures target}
+            ^{daysLeftWidget daysLeft}

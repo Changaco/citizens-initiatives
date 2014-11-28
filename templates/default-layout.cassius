@@ -43,9 +43,17 @@ p
     margin-left: 10px
 
 .initiative
-    margin-top: 1em
+    &.ongoing
+        margin-top: 2.5em
+    &.closed
+        margin-top: 1em
+    h3
+        margin-top: 0
     & > .col-md-9
         margin-bottom: 15px
+
+h2 + .initiative
+    padding-top: 1em
 
 .external-links > p
     display: inline-block

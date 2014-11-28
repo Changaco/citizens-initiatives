@@ -8,7 +8,12 @@ caret = [whamlet|<span class="caret">|]
 
 
 daysLeftWidget :: Int -> Widget
-daysLeftWidget daysLeft | daysLeft < 0 = [whamlet||]
+daysLeftWidget daysLeft | daysLeft < 0 = [whamlet|
+<p>
+    <span class="days-left alert alert-info">
+        <i class="fa fa-clock-o"></i> _{MsgDaysAgo daysAgo}
+|]
+    where daysAgo = -daysLeft
 daysLeftWidget daysLeft = [whamlet|
 <p>
     <span class="days-left alert alert-#{styl}">

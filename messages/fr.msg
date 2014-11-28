@@ -6,8 +6,12 @@ About: À propos
 
 HomeIntro: Une initiative citoyenne est un mécanisme officiel, semblable à une pétition, permettant aux citoyens de réclamer l'attention de leurs représentants sur un sujet précis. Ce site répertorie les Initiatives Citoyennes Européennes (ICE) en cours. Chaque ICE recueillant plus d'un million de signatures dans le temps imparti sera examinée par la Commission Européenne.
 
+ClosedInitiatives: Initiatives closes
+OngoingInitiatives: Initiatives en cours
+
 Annex: Annexe
-DaysLeft i: #{show i} #{plural i "jour restant" "jours restants"}
+DaysAgo i@Int: close depuis #{show i} #{pluralFR i "jour" "jours"}
+DaysLeft i: #{show i} #{pluralFR i "jour restant" "jours restants"}
 Documents: Documents
 DraftLegalAct: Projet d'acte législatif
 InitiativeEnded: Cette initiative est terminée, la signer n'est plus possible.

@@ -40,6 +40,9 @@ plural :: (Num i, Eq i) => i -> Text -> Text -> Text
 plural 1 a _ = a
 plural _ _ b = b
 
+pluralFR :: (Num i, Ord i) => i -> Text -> Text -> Text
+pluralFR i a b = if i > 1 then b else a
+
 
 -- * JSON
 
