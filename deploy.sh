@@ -2,7 +2,7 @@
 
 appname="citizens-initiatives"
 domain="citizens-initiatives.oy.lc"
-ghc_version="7.8.3"
+ghc_version="7.10.2"
 libdir="lib/ghc-$ghc_version"
 sandbox_libdir=".cabal-sandbox/lib/x86_64-linux-ghc-$ghc_version"
 

@@ -70,10 +70,11 @@ library
                  , http-conduit
                  , http-types
                  , hxt
-                 , monad-control
+                 , monad-control < 1.0
                  , monad-logger
                  , monads-tf
                  , network
+                 , network-uri
                  , old-locale
                  , persistent
                  , persistent-postgresql

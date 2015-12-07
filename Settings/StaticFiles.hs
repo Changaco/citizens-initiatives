@@ -1,11 +1,11 @@
 module Settings.StaticFiles where
 
-import Prelude hiding (FilePath)
+import Prelude
+
 import Data.ByteString.Lazy (ByteString)
 import Data.Default (def)
 import qualified Data.Text.Lazy as TL
 import qualified Data.Text.Lazy.Encoding as TLE
-import Filesystem.Path.CurrentOS (FilePath)
 import Language.Haskell.TH (Q, Exp, Name)
 import System.Directory (doesFileExist)
 import System.Exit (ExitCode(..))
