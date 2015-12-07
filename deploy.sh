@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 appname="citizens-initiatives"
 domain="citizens-initiatives.oy.lc"
 ghc_version="7.10.2"
@@ -9,15 +11,15 @@ sandbox_libdir=".cabal-sandbox/lib/x86_64-linux-ghc-$ghc_version"
 remote="citizens-initiatives@changaco.oy.lc"
 
 # Build
-rm -r static/{combined,tmp} 2>/dev/null
+rm -rf static/{combined,tmp} 2>/dev/null
 cabal clean
-cabal install || exit 1
+cabal install
 
 # Upload the app and its dependencies
 homedir="$(ssh $remote 'echo $HOME')"
 appsdir="$homedir/apps"
 logdir="$homedir/logs/$appname"
-ssh $remote "mkdir -p $appsdir; mkdir $appsdir/$appname.lock" || exit 1
+ssh $remote "mkdir -p $appsdir; mkdir $appsdir/$appname.lock"
 trap "ssh $remote 'rmdir $appsdir/$appname.lock'" EXIT
 destdir="$(ssh $remote "mkdir -p $appsdir && mktemp -d -p $appsdir $appname.XXXXX")"
 remote_libs="$(ssh $remote "mkdir -p $homedir/$libdir && cd $homedir/$libdir && md5sum *.so" 2>/dev/null | sort)"
@@ -37,7 +39,7 @@ for f in "$tmpdir/$libdir"/*.so "$tmpdir/bin/$appname"; do
     [ $? -ne 0 ] && echo "$out" && exit 1
 done
 local_libs="$(cd "$tmpdir/$libdir" && md5sum *.so | sort)"
-libs_diff="$(diff --unified=-1 <(echo "$remote_libs") <(echo "$local_libs"))"
+libs_diff="$(diff --unified=-1 <(echo "$remote_libs") <(echo "$local_libs") || true)"
 if [ "$libs_diff" != "" ]; then
     libs_already_uploaded="$(echo "$libs_diff" | tail -n +4 | grep -G '^ ' | sed -r "s|^ \S+\s+||")"
 else
@@ -51,9 +53,11 @@ rm $appname.tar.xz
 
 # Run the app
 ssh $remote "bash -l" <<EOF
+    set -e
+
     # Unpack
     cd $destdir
-    tar -xavf $appname.tar.xz || exit 1
+    tar -xavf $appname.tar.xz
     rm $appname.tar.xz
     libs="\$(find $destdir/$libdir -name '*.so')"
     [[ \$libs ]] && mv \$libs $homedir/$libdir # FIXME this is unsafe
@@ -75,10 +79,12 @@ ssh $remote "bash -l" <<EOF
     tail_pid=\$!
     i=0
     while true; do
-        let i++
+        let ++i
         sleep 1s
-        out="\$(curl -f http://localhost:\$new_port/ 2>/dev/null)"
-        [ \$? -eq 0 ] && { kill \$tail_pid; break; }
+        if out="\$(curl -f http://localhost:\$new_port/ 2>/dev/null)"; then
+            kill \$tail_pid
+            break
+        fi
         [ \$i -gt 9 ] && { kill \$tail_pid \$new_pid; echo "\$out"; exit 1; }
     done
     disown
@@ -87,10 +93,10 @@ ssh $remote "bash -l" <<EOF
     chmod g+rX -R $destdir  # allow nginx to serve the static files
     sed -e "s|DOMAIN|$domain|g" -e "s|PORT|\$new_port|g" \
         -e "s|LOGDIR|$logdir|g" -e "s|APPDIR|$destdir|g" \
-        <$destdir/config/nginx.conf.in >$destdir/config/nginx.conf || exit 1
+        <$destdir/config/nginx.conf.in >$destdir/config/nginx.conf
     rm $appsdir/$appname 2>/dev/null
-    ln -s $destdir $appsdir/$appname || exit 1
-    /usr/local/bin/nginx-reload || exit 1
+    ln -s $destdir $appsdir/$appname
+    /usr/local/bin/nginx-reload
 
     # Kill the old process and remove the lock
     [ "\$old_pid" != "" ] && kill \$old_pid
