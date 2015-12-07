@@ -1,9 +1,14 @@
 server {
     listen  [::]:80;
+    listen  [::]:443 ssl;
 
     server_name  DOMAIN;
 
     access_log  LOGDIR/access.log;
+
+    ssl on; ssl_prefer_server_ciphers on; ssl_session_timeout 5m;
+    ssl_certificate  /etc/letsencrypt/live/DOMAIN/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/DOMAIN/privkey.pem;
 
     location / {
         proxy_pass  http://localhost:PORT;
@@ -14,14 +19,22 @@ server {
     location = /favicon.ico {
         root APPDIR/config;
     }
+    location /.well-known {
+        root APPDIR;
+    }
 }
 
 server {
     listen  [::]:80;
+    listen  [::]:443 ssl;
 
     server_name  static.DOMAIN;
 
     access_log  LOGDIR/access.log;
+
+    ssl on; ssl_prefer_server_ciphers on; ssl_session_timeout 5m;
+    ssl_certificate  /etc/letsencrypt/live/static.DOMAIN/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/static.DOMAIN/privkey.pem;
 
     add_header Access-Control-Allow-Origin "*";
 
@@ -42,7 +55,11 @@ server {
 
 server {
     listen  [::]:80;
+    listen  [::]:443 ssl;
     server_name www.DOMAIN;
     access_log  LOGDIR/access.log;
+    ssl on; ssl_prefer_server_ciphers on; ssl_session_timeout 5m;
+    ssl_certificate  /etc/letsencrypt/live/DOMAIN/fullchain.pem;
+    ssl_certificate_key  /etc/letsencrypt/live/DOMAIN/privkey.pem;
     return 301 $scheme://DOMAIN$request_uri;
 }
