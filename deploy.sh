@@ -7,13 +7,6 @@ libdir="lib/ghc-$ghc_version"
 sandbox_libdir=".cabal-sandbox/lib/x86_64-linux-ghc-$ghc_version"
 
 remote="citizens-initiatives@changaco.oy.lc"
-homedir="$(ssh $remote 'echo $HOME')"
-appsdir="$homedir/apps"
-ssh $remote "mkdir -p $appsdir; mkdir $appsdir/$appname.lock" || exit 1
-trap "ssh $remote 'rmdir $appsdir/$appname.lock'" EXIT
-logdir="$homedir/logs/$appname"
-destdir="$(ssh $remote "mkdir -p $appsdir && mktemp -d -p $appsdir $appname.XXXXX")"
-remote_libs="$(ssh $remote "mkdir -p $homedir/$libdir && cd $homedir/$libdir && md5sum *.so" 2>/dev/null | sort)"
 
 # Build
 rm -r static/{combined,tmp} 2>/dev/null
@@ -21,6 +14,13 @@ cabal clean
 cabal install || exit 1
 
 # Upload the app and its dependencies
+homedir="$(ssh $remote 'echo $HOME')"
+appsdir="$homedir/apps"
+logdir="$homedir/logs/$appname"
+ssh $remote "mkdir -p $appsdir; mkdir $appsdir/$appname.lock" || exit 1
+trap "ssh $remote 'rmdir $appsdir/$appname.lock'" EXIT
+destdir="$(ssh $remote "mkdir -p $appsdir && mktemp -d -p $appsdir $appname.XXXXX")"
+remote_libs="$(ssh $remote "mkdir -p $homedir/$libdir && cd $homedir/$libdir && md5sum *.so" 2>/dev/null | sort)"
 tmpdir="$(mktemp -p . -d)"
 mkdir -p "$tmpdir/"{bin,$libdir}
 install -m 755 -D {.cabal-sandbox,$tmpdir}/bin/$appname
